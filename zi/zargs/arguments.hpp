@@ -55,6 +55,48 @@ public:
         handlers_.push_back( h );
     }
 
+    void show_help(){
+        std::cout << "Usage: " << file_name_ << " [OPTIONS] ...\n\n";
+
+        auto handlers = handlers_;
+        std::sort(handlers.begin(), handlers.end(),
+                  [](handler* a, handler* b){
+                      return a->get_name() < b->get_name();
+                  });
+
+        for(const auto* handler : handlers )
+        {
+            const auto& h = *handler;
+
+            std::cout.width(29);
+            std::cout << std::left
+                      << ("  --" + h.get_name());
+
+            std::string desc = h.get_description();
+            std::vector< std::string > lines;
+            detail::explode( lines, desc, '\n' );
+
+            for(const auto& line : lines){
+                std::cout << line << "; ";
+            }
+
+            std::string typ = h.get_type();
+            std::transform(typ.begin(), typ.end(), typ.begin(), ::tolower);
+
+            std::cout << "default=" << h.get_default()
+                      << " (" << typ << ")" << "\n";
+        }
+
+        std::cout << "\n"
+                  << "Notes:\n"
+                  << "  - For non-BOOLEAN types:\n"
+                  << "      -key VALUE (is equivalent to --key=VALUE)\n"
+                  << "      -key=VALUE (is equivalent to --key=VALUE)\n"
+                  << "  - For BOOLEAN types:\n"
+                  << "      -key   (is equivalent to --key=true)\n"
+                  << "      -nokey (is equivalent to --key=false)\n";
+    }
+
     bool parse_arguments( int &argc, char **argv, bool remove_args = true )
     {
         file_name_ = std::string( argv[0] );
@@ -70,43 +112,7 @@ public:
 
             if ( *it == "-h" || *it == "--help" || *it == "-help" )
             {
-                std::cout << "Usage: " << file_name_ << " [OPTIONS] ...\n\n";
-		std::vector< handler* > handlers = handlers_;
-		std::sort(handlers.begin(), handlers.end(), 
-			  [](handler* a, handler* b){
-			    return a->get_name() < b->get_name();
-			  });
-
-                FOR_EACH ( it, handlers )
-                {
-                    std::cout.width(29);
-                    std::cout << std::left
-                              << ("  --" + (*it)->get_name());
-
-                    std::string desc = (*it)->get_description();
-                    std::vector< std::string > lines;
-                    detail::explode( lines, desc, '\n' );
-
-                    FOR_EACH ( lit, lines ){
-		      std::cout << (*lit) << "; ";
-		    }
-		    
-		    std::string typ = (*it)->get_type();
-		    std::transform(typ.begin(), typ.end(), typ.begin(), ::tolower);
-
-                    std::cout << "default=" << (*it)->get_default() 
-			      << " (" << typ << ")" << "\n";
-                }
-
-                std::cout << "\n"
-			  << "Notes:\n"
-                          << "  - For non-BOOLEAN types:\n"
-                          << "      -key VALUE (is equivalent to --key=VALUE)\n"
-                          << "      -key=VALUE (is equivalent to --key=VALUE)\n"
-                          << "  - For BOOLEAN types:\n"
-                          << "      -key   (is equivalent to --key=true)\n"
-                          << "      -nokey (is equivalent to --key=false)\n";
-
+                show_help();
                 exit( 0 );
                 return false;
             }
