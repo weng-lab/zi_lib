@@ -56,7 +56,7 @@ public:
     }
 
     void show_help(){
-        std::cout << "Usage: " << file_name_ << " [OPTIONS] ...\n\n";
+        std::cerr << "Usage: " << file_name_ << " [OPTIONS] ...\n\n";
 
         auto handlers = handlers_;
         std::sort(handlers.begin(), handlers.end(),
@@ -68,8 +68,8 @@ public:
         {
             const auto& h = *handler;
 
-            std::cout.width(29);
-            std::cout << std::left
+            std::cerr.width(29);
+            std::cerr << std::left
                       << ("  --" + h.get_name());
 
             std::string desc = h.get_description();
@@ -77,17 +77,17 @@ public:
             detail::explode( lines, desc, '\n' );
 
             for(const auto& line : lines){
-                std::cout << line << "; ";
+                std::cerr << line << "; ";
             }
 
             std::string typ = h.get_type();
             std::transform(typ.begin(), typ.end(), typ.begin(), ::tolower);
 
-            std::cout << "default=" << h.get_default()
+            std::cerr << "default=" << h.get_default()
                       << " (" << typ << ")" << "\n";
         }
 
-        std::cout << "\n"
+        std::cerr << "\n"
                   << "Notes:\n"
                   << "  - For non-BOOLEAN types:\n"
                   << "      -key VALUE (is equivalent to --key=VALUE)\n"
