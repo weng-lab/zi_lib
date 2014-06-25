@@ -173,6 +173,11 @@ inline bool parse_arguments( int &argc, char **argv, bool remove_args = true )
     return zi::zargs_::arguments::instance().parse_arguments( argc, argv, remove_args );
 }
 
+inline void show_help()
+{
+    zi::zargs_::arguments::instance().show_help();
+}
+
 } // namespace zi
 
 #endif
