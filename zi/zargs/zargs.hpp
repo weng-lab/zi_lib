@@ -161,7 +161,7 @@
 #define DECLARE_ZiARG_uint64( _name ) __ZiARG_DECL( _name, uint64_t )
 #define DECLARE_ZiARG_float( _name )  __ZiARG_DECL( _name, float    )
 #define DECLARE_ZiARG_double( _name ) __ZiARG_DECL( _name, double   )
-#define DECLARE_ZiARG_string( _name ) __ZiARG_DECL( _name, string   )
+#define DECLARE_ZiARG_string( _name ) __ZiARG_DECL( _name, std::string   )
 #define DECLARE_ZiARG_bool( _name )   __ZiARG_DECL( _name, bool     )
 
 #define __ZiARG_DECL_SET( _name, _type )        \
