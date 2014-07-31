@@ -65,7 +65,7 @@
             {                                                           \
                 if ( matcher_.match( #_name, q ) )                      \
                 {                                                       \
-                    if ( !q.size() > 0 )                                \
+                    if ( !q.size() )                                    \
                     {                                                   \
                         throw zi::exception                             \
                             ( "No value specified for " + get_name() +  \
