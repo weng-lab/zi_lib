@@ -65,6 +65,12 @@
             {                                                           \
                 if ( matcher_.match( #_name, q ) )                      \
                 {                                                       \
+                    if ( !q.size() > 0 )                                \
+                    {                                                   \
+                        throw zi::exception                             \
+                            ( "No value specified for " + get_name() +  \
+                              " [" + get_type() + "]");                 \
+                    }                                                   \
                     std::string val = q.front();                        \
                     if ( !parser_.parse( &ZiARG_ ## _name, val ) )      \
                     {                                                   \
