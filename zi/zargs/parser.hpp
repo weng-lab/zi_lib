@@ -93,11 +93,11 @@ struct parser< std::set< Type, Compare, Alloc > >
         std::vector< std::string > all;
         detail::explode( all, source, ',' );
 
-        for ( std::vector< std::string >::const_iterator it = all.begin(); it != all.end(); ++it )
+        for (const auto& tok : all)
         {
             try
             {
-                target->insert( lexical_cast< Type >( *it ) );
+                target->insert( lexical_cast< Type >( tok ) );
             }
             catch (...)
             {
@@ -117,11 +117,11 @@ struct parser< std::vector< Type, Alloc > >
         std::vector< std::string > all;
         detail::explode( all, source, ',' );
 
-        for ( std::vector< std::string >::const_iterator it = all.begin(); it != all.end(); ++it )
+        for (const auto& tok : all)
         {
             try
             {
-                target->push_back( lexical_cast< Type >( *it ) );
+                target->push_back( lexical_cast< Type >( tok ) );
             }
             catch (...)
             {
@@ -139,11 +139,11 @@ template<> struct parser< std::map< std::string, bool > >
         std::vector< std::string > all;
         detail::explode( all, source, ',' );
 
-        for ( std::vector< std::string >::const_iterator it = all.begin(); it != all.end(); ++it )
+        for (const auto& tok : all)
         {
             try
             {
-                target->insert( std::make_pair( *it, true) );
+                target->insert( std::make_pair( tok, true) );
             }
             catch (...) {
                 return false;

@@ -22,6 +22,9 @@
 #include <string>
 #include <cstddef>
 #include <cstdlib>
+#include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/algorithm/string/join.hpp>
 
 namespace zi {
 namespace zargs_ {
@@ -29,57 +32,18 @@ namespace detail {
 
 inline std::string to_lower( const std::string& s )
 {
-    std::size_t len = s.size();
-    std::string ret = s;
-
-    for ( std::size_t i = 0; i < len; ++i )
-    {
-        ret[i] = static_cast< char >( std::tolower( s[i] ) );
-    }
-
-    return ret;
+    return boost::algorithm::to_lower_copy(s);
 }
 
 template< class Container >
 inline void explode( Container &ret, const std::string& source, char splitter = ' ' )
 {
-    std::size_t startpos;
-    std::size_t pos  = 0;
-    std::size_t npos = std::string::npos;
-
-    std::string tmp;
-    std::string src = source;
-
-    std::size_t length = src.size();
-
-    while (pos != npos && pos < length)
-    {
-        startpos = pos;
-        pos = src.find_first_of(splitter, pos);
-
-        if (pos != 0)
-        {
-            tmp = source.substr(startpos, pos-startpos);
-            ret.push_back(tmp);
-            if (pos != npos)
-            {
-                ++pos;
-            }
-        }
-        else
-        {
-            break;
-        }
-    }
+    boost::split(ret, source, std::bind2nd(std::equal_to<char>(), splitter));
 }
 
 inline bool begins_with( const std::string &b, const std::string &s )
 {
-    if ( s.size() < b.size() )
-    {
-        return false;
-    }
-    return ( b == s.substr( 0, b.size() ) );
+    return boost::starts_with(s, b);
 }
 
 inline std::string strip_quotes( const std::string& s )
