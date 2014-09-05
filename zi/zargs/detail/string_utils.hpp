@@ -20,11 +20,7 @@
 #define ZI_ZARGS_DETAIL_STRING_UTILS_HPP 1
 
 #include <string>
-#include <cstddef>
-#include <cstdlib>
 #include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string/predicate.hpp>
-#include <boost/algorithm/string/join.hpp>
 
 namespace zi {
 namespace zargs_ {
@@ -35,10 +31,12 @@ inline std::string to_lower( const std::string& s )
     return boost::algorithm::to_lower_copy(s);
 }
 
-template< class Container >
-inline void explode( Container &ret, const std::string& source, char splitter = ' ' )
+inline std::vector< std::string >
+explode(const std::string& source, char splitter = ' ' )
 {
+    std::vector< std::string > ret;
     boost::split(ret, source, std::bind2nd(std::equal_to<char>(), splitter));
+    return ret;
 }
 
 inline bool begins_with( const std::string &b, const std::string &s )

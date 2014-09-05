@@ -90,8 +90,7 @@ struct parser< std::set< Type, Compare, Alloc > >
 {
     bool parse( std::set< Type, Compare, Alloc >* target, const std::string &source ) const
     {
-        std::vector< std::string > all;
-        detail::explode( all, source, ',' );
+        std::vector< std::string > all = detail::explode(source, ',' );
 
         for (const auto& tok : all)
         {
@@ -114,8 +113,7 @@ struct parser< std::vector< Type, Alloc > >
 {
     bool parse( std::vector< Type, Alloc >* target, const std::string &source ) const
     {
-        std::vector< std::string > all;
-        detail::explode( all, source, ',' );
+        std::vector< std::string > all = detail::explode(source, ',' );
 
         for (const auto& tok : all)
         {
@@ -136,8 +134,7 @@ template<> struct parser< std::map< std::string, bool > >
 {
     bool parse( std::map< std::string, bool >* target, const std::string &source ) const
     {
-        std::vector< std::string > all;
-        detail::explode( all, source, ',' );
+        std::vector< std::string > all = detail::explode(source, ',' );
 
         for (const auto& tok : all)
         {

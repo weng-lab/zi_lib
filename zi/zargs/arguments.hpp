@@ -73,8 +73,7 @@ public:
                       << ("  --" + h.get_name());
 
             std::string desc = h.get_description();
-            std::vector< std::string > lines;
-            detail::explode( lines, desc, '\n' );
+            std::vector< std::string > lines = detail::explode(desc, '\n' );
 
             for(const auto& line : lines){
                 std::cerr << line << "; ";
