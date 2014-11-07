@@ -48,6 +48,13 @@
 #  define ZI_OS_MACOS
 #  include <zi/config/os/macos.hpp>
 #
+#elif defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))
+#  include <sys/param.h>
+#  if defined(__FreeBSD__)
+#    define ZI_OS_FREEBSD
+#    include <zi/config/os/freebsd.hpp>
+#  endif
+#
 #elif defined( __CYGWIN32__ ) || defined ( __CYGWIN__ )
 #  define ZI_OS_CYGWIN
 #  include <zi/config/os/cygwin.hpp>
