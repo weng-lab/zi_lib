@@ -83,7 +83,9 @@ using ZI_TYPE_TRAITS_NAMESPACE::remove_pointer;
 using ZI_TYPE_TRAITS_NAMESPACE::add_pointer;
 using ZI_TYPE_TRAITS_NAMESPACE::aligned_storage;
 
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
+// disabled as per http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2010/n3142.html
+// => clang 3.4 sets __GXX_EXPERIMENTAL_CXX0X__ but does not have std::has_trivial_.*
+#ifdef DISABLED__GXX_EXPERIMENTAL_CXX0X__
 
 template< typename T >
 struct has_trivial_constructor: std::has_trivial_default_constructor< T > {};
