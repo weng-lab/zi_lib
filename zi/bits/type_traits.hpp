@@ -87,16 +87,16 @@ using ZI_TYPE_TRAITS_NAMESPACE::aligned_storage;
 // => clang 3.4 sets __GXX_EXPERIMENTAL_CXX0X__ but does not have std::has_trivial_.*
 #if defined(__GXX_EXPERIMENTAL_CXX0X__) && defined(__GLIBCXX__)
 template< typename T >
-struct has_trivial_constructor: std::has_trivial_default_constructor< T > {};
+struct has_trivial_constructor: std::is_trivially_default_constructible< T > {};
 
 template< typename T >
-struct has_trivial_copy: std::has_trivial_copy_constructor< T > {};
+struct has_trivial_copy: std::is_trivially_copy_constructible< T > {};
 
 template< typename T >
 struct has_nothrow_constructor: std::is_nothrow_default_constructible< T > {};
 
 template< typename T >
-struct has_nothrow_copy: std::is_nothrow_default_constructible< T > {};
+struct has_nothrow_copy: std::is_nothrow_copy_constructible< T > {};
 
 template< typename T >
 struct add_reference: std::add_lvalue_reference< T > {};
